@@ -1,4 +1,5 @@
 from urllib.parse import urlencode
+from pprint import pprint
 import requests
 
 OAUTH_URL = 'https://oauth.vk.com/authorize'
@@ -14,7 +15,7 @@ print('?'.join(
 (OAUTH_URL, urlencode(OAUTH_PARAMs))
 ))
 
-token = "042b4bc0701d5416293bb221df2a95a7d6cb7596c21963e8b1245dadd8cb35ca64c8dc8588b0f785512c5"
+token = "cea56fcb248045b854fdb1c6477ca5a487ac6130a9c1500fde22a4a6df73fdd990de711fe795687c0c458"
 
 url = 'https://api.vk.com/method/friends.getMutual'
 
@@ -39,16 +40,24 @@ class Users:
         ids = response.json()['response']
         for values in ids:
             results.append(Users(str(values), token))
-
+            print (f'Общий друг в сети VK: https://vk.com/id{values}')
         return results
+    def __str__(self):
+        return f'Ссылка на профиль пользователя в сети VK: https://vk.com/id{self.id}'
 
-    def print(self):
-        line = 'https://vk.com/id'
-        print(line+self.id)
+user1 = Users('109633595', token)
+user2 = Users('3869695', token)
 
-olga = Users('109633595', token)
-veronika = Users('3869695', token)
+user1 & user2
 
-for values in olga & veronika:
-    values.print()
+print (user1)
+print (user2)
+
+
+
+
+
+
+
+
 
